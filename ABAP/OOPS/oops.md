@@ -1,1 +1,65 @@
+# OOPS Concepts
 
+```abap
+REPORT Z1DEMO.
+
+**********************************abap classes access specifications and inheritance: begin
+CLASS LCL_DEMO_1 DEFINITION.
+  PUBLIC SECTION.
+    METHODS: PRINT_PUBLIC.
+  PROTECTED SECTION.
+    METHODS: PRINT_PROTECTED.
+  PRIVATE SECTION.
+    METHODS: PRINT_PRIVATE.
+ENDCLASS.
+
+CLASS LCL_DEMO_1 IMPLEMENTATION.
+  METHOD PRINT_PUBLIC.
+    WRITE /: 'public class 1'.
+    CALL METHOD PRINT_PROTECTED.
+    CALL METHOD PRINT_PRIVATE.
+  ENDMETHOD.
+  METHOD PRINT_PROTECTED.
+    WRITE /: 'protected class 1'.
+  ENDMETHOD.
+  METHOD PRINT_PRIVATE.
+    WRITE /: 'private class 1'.
+  ENDMETHOD.
+ENDCLASS.
+
+CLASS LCL_DEMO_2 DEFINITION INHERITING FROM LCL_DEMO_1.
+  PUBLIC SECTION.
+    METHODS: PRINT_PUBLIC REDEFINITION.
+  PROTECTED SECTION.
+    METHODS: PRINT_PROTECTED REDEFINITION.
+*  PRIVATE SECTION.
+*    METHODS: PRINT_PRIVATE REDEFINITION.
+ENDCLASS.
+
+CLASS LCL_DEMO_2 IMPLEMENTATION.
+  METHOD PRINT_PUBLIC.
+    WRITE /: 'inherited call to public'.
+    CALL METHOD: PRINT_PROTECTED.
+  ENDMETHOD.
+
+  METHOD PRINT_PROTECTED.
+    WRITE /: 'inherited call to protected'.
+  ENDMETHOD.
+
+*  METHOD PRINT_PRIVATE.
+*    WRITE: 'inherited call to private'.
+*  ENDMETHOD.
+ENDCLASS.
+
+
+START-OF-SELECTION.
+  DATA(OREF1) = NEW LCL_DEMO_1( ).
+  DATA(OREF2) = NEW LCL_DEMO_2( ).
+
+  OREF1->PRINT_PUBLIC( ).
+  OREF2->PRINT_PUBLIC( ).
+**********************************abap classes access specifications and inheritance: end
+
+
+**********************************abap classes access specifications: end
+```

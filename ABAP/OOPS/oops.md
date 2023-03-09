@@ -104,3 +104,32 @@ START-OF-SELECTION.
 
 
 **********************************abap classes static and instance attributes: end
+
+**********************************abap classes static and instance constructor and class-constructor: begin
+CLASS LCL1 DEFINITION.
+  PUBLIC SECTION.
+    METHODS CONSTRUCTOR.
+    CLASS-METHODS CLASS_CONSTRUCTOR.
+    CLASS-DATA: LV1 TYPE I.
+ENDCLASS.
+
+
+CLASS LCL1 IMPLEMENTATION.
+  METHOD CONSTRUCTOR.
+    LV1 = 1.
+    WRITE: 'constructor says lv1 =', LV1.
+  ENDMETHOD.
+
+  METHOD CLASS_CONSTRUCTOR.
+    LV1 = 10.
+    WRITE: 'class constructor says lv1 =', LV1.
+  ENDMETHOD.
+ENDCLASS.
+
+START-OF-SELECTION.
+  BREAK-POINT.
+*  DATA(OREF) = NEW LCL1( ).
+  DATA: OREF TYPE REF TO LCL1.
+  CREATE OBJECT OREF.
+
+**********************************abap classes static and instance constructor and class-constructor: end

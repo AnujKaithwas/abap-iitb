@@ -61,5 +61,46 @@ START-OF-SELECTION.
 **********************************abap classes access specifications and inheritance: end
 
 
-**********************************abap classes access specifications: end
-```
+**********************************abap classes static and instance attributes: begin
+CLASS LCL_DEMO_1 DEFINITION.
+  PUBLIC SECTION.
+    DATA: LV_1 TYPE I.
+    CLASS-DATA: LV_2 TYPE I.
+    METHODS: INSTANCE.
+    CLASS-METHODS: STATIC.
+ENDCLASS.
+
+CLASS LCL_DEMO_1 IMPLEMENTATION.
+  METHOD INSTANCE.
+    LV_1 = 10.
+    LV_2 = 20.
+  ENDMETHOD.
+
+  METHOD STATIC.
+*    LV_1 = 30.
+    LV_2 = 40.
+  ENDMETHOD.
+ENDCLASS.
+
+
+
+START-OF-SELECTION.
+  BREAK-POINT.
+  DATA(OREF1) = NEW LCL_DEMO_1( ).
+  OREF1->INSTANCE( ).
+  WRITE : 'instance value of oref1:', OREF1->LV_1.
+  WRITE : 'static value of oref1:', OREF1->LV_2.
+  OREF1->STATIC( ).
+  WRITE : 'instance value of oref1:', OREF1->LV_1.
+  WRITE : 'static value of oref1:', OREF1->LV_2.
+
+  DATA(OREF2) = NEW LCL_DEMO_1( ).
+  OREF2->INSTANCE( ).
+  WRITE : 'instance value of oref2:', OREF2->LV_1.
+  WRITE : 'static value of oref2:', OREF2->LV_2.
+  OREF2->STATIC( ).
+  WRITE : 'instance value of oref2:', OREF2->LV_1.
+  WRITE : 'static value of oref2:', OREF2->LV_2.
+
+
+**********************************abap classes static and instance attributes: end

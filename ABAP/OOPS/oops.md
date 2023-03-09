@@ -133,3 +133,44 @@ START-OF-SELECTION.
   CREATE OBJECT OREF.
 
 **********************************abap classes constructor and class-constructor: end
+
+**********************************abap classes abstract: begin
+*CLASS LCL1 DEFINITION ABSTRACT.
+*  PUBLIC SECTION.
+*    DATA: LV TYPE I.
+*    METHODS: WRITE.
+*    METHODS: DISPLAY IMPORTING LV1 TYPE I.
+*  PROTECTED SECTION.
+*  PRIVATE SECTION.
+*ENDCLASS.
+*
+*
+*CLASS LCL1 IMPLEMENTATION.
+*  METHOD WRITE.
+**    WRITE /: 'abstract method call'.
+*  ENDMETHOD.
+*
+*  METHOD DISPLAY .
+*    WRITE /: lv1.
+*  ENDMETHOD.
+*ENDCLASS.
+*
+*CLASS LCL2 DEFINITION INHERITING FROM LCL1.
+*  PUBLIC SECTION.
+**  METHODS WRITE REDEFINITION.
+*ENDCLASS.
+*
+*CLASS LCL2 IMPLEMENTATION.
+*
+*ENDCLASS.
+*
+*START-OF-SELECTION.
+*
+*  DATA(OREF) = NEW LCL2( ).
+*  BREAK-POINT.
+*  CALL METHOD OREF->DISPLAY
+*    EXPORTING
+*      LV1 = 1
+*    .
+**********************************abap classes abstract: end
+

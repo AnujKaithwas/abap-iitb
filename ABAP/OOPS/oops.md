@@ -105,7 +105,7 @@ START-OF-SELECTION.
 
 **********************************abap classes static and instance attributes: end
 
-**********************************abap classes static and instance constructor and class-constructor: begin
+**********************************abap classes constructor and class-constructor: begin
 CLASS LCL1 DEFINITION.
   PUBLIC SECTION.
     METHODS CONSTRUCTOR.
@@ -132,4 +132,4 @@ START-OF-SELECTION.
   DATA: OREF TYPE REF TO LCL1.
   CREATE OBJECT OREF.
 
-**********************************abap classes static and instance constructor and class-constructor: end
+**********************************abap classes constructor and class-constructor: end

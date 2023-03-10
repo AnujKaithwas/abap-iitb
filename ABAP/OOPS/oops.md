@@ -174,3 +174,134 @@ START-OF-SELECTION.
 *    .
 **********************************abap classes abstract: end
 
+**********************************abap classes friends: begin
+START-OF-SELECTION.
+BREAK-POINT.
+  DATA(OREF) = NEW ZCL090301( ).
+
+  BREAK-POINT.
+  CALL METHOD OREF->CALL_DISPLAY.
+
+=====================================================================
+class ZCL090301 definition
+  public
+  final
+  create public .
+
+public section.
+
+  methods CALL_DISPLAY .
+protected section.
+private section.
+ENDCLASS.
+
+
+
+CLASS ZCL090301 IMPLEMENTATION.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL090301->CALL_DISPLAY
+* +-------------------------------------------------------------------------------------------------+
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  METHOD CALL_DISPLAY.
+
+    DATA: OREF TYPE REF TO ZCL0903.
+    CALL METHOD ZCL0903=>GET_INSTANCE
+      IMPORTING
+        EX_INSTANCE = OREF.
+
+    DATA: EBELN TYPE EBELN.
+    OREF->EBELN = 11.
+
+    CALL METHOD OREF->DISPLAY
+      EXPORTING
+        I_EBELN = OREF->EBELN
+      IMPORTING
+        E_EBELN = EBELN.
+    .
+
+    WRITE /: 'ebeln exported from friend class is', OREF->EBELN.
+    WRITE /: 'ebeln imported into friend class is', EBELN.
+
+  ENDMETHOD.
+ENDCLASS.
+=================================================================
+
+class ZCL0903 definition
+  public
+  final
+  create private
+
+  global friends ZCL090301 .
+
+public section.
+
+  class-methods CLASS_CONSTRUCTOR .
+  methods CONSTRUCTOR .
+  class-methods GET_INSTANCE
+    exporting
+      !EX_INSTANCE type ref to ZCL0903 .
+protected section.
+private section.
+
+  class-data INSTANCE type ref to ZCL0903 .
+  data EBELN type EBELN .
+
+  methods DISPLAY
+    importing
+      !I_EBELN type EBELN
+    exporting
+      !E_EBELN type EBELN .
+ENDCLASS.
+
+
+
+CLASS ZCL0903 IMPLEMENTATION.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL0903=>CLASS_CONSTRUCTOR
+* +-------------------------------------------------------------------------------------------------+
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  method CLASS_CONSTRUCTOR.
+  endmethod.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method ZCL0903->CONSTRUCTOR
+* +-------------------------------------------------------------------------------------------------+
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  method CONSTRUCTOR.
+    BREAK-POINT.
+  endmethod.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Private Method ZCL0903->DISPLAY
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] I_EBELN                        TYPE        EBELN
+* | [<---] E_EBELN                        TYPE        EBELN
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  METHOD DISPLAY.
+    WRITE /: 'imported private ebeln', I_EBELN.
+    E_EBELN = 22.
+    WRITE /: 'exported private ebeln', E_EBELN.
+  ENDMETHOD.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method ZCL0903=>GET_INSTANCE
+* +-------------------------------------------------------------------------------------------------+
+* | [<---] EX_INSTANCE                    TYPE REF TO ZCL0903
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  METHOD GET_INSTANCE.
+    IF  INSTANCE IS INITIAL.
+      CREATE OBJECT INSTANCE.
+    ENDIF.
+    EX_INSTANCE = INSTANCE.
+  ENDMETHOD.
+ENDCLASS.
+============================================================================================
+
+**********************************abap classes friends: end
